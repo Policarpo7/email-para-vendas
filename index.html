@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policarpo's Store</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+    </style>
+</head>
+<body>
+<h1>Loja Exemplo</h1>
+<form id="orderForm">
+    <label for="product">Produto:</label>
+    <input type="text" id="product" name="product" placeholder="Produto X" required>
+    <br>
+    <label for="price">Valor pago:</label>
+    <input type="text" id="price" name="price" placeholder="130" required>
+    <br>
+    <label for="address">Endereço de entrega e CEP: </label>
+    <input type="text" id="address" name="address" placeholder="SQNW 309 apt 311 - 7951273" required>
+    <br>
+    <label for="clientEmail">E-mail do cliente:</label>
+    <input type="email" id="clientEmail" name="clientEmail" placeholder="seuemail@gmail.com" required>
+    <br>
+    <button type="submit">Finalizar compra</button>
+</form>
+
+<script>
+    async function sendOrderConfirmation(event) {
+        event.preventDefault(); // Previne o envio padrão do formulário
+
+        const product = document.getElementById('product').value;
+        const price = document.getElementById('price').value;
+        const address = document.getElementById('address').value;
+        const clientEmail = document.getElementById('clientEmail').value;
+
+        const requestBody = {
+            product,
+            price,
+            address,
+            clientEmail,
+        };
+
+        try {
+            const response = await fetch('/sendEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (response.ok) {
+                alert('Pedido enviado com sucesso!');
+            } else {
+                alert('Erro ao enviar o pedido.');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar o pedido:', error);
+            alert('Erro ao enviar o pedido.');
+        }
+    }
+
+    document.getElementById('orderForm').addEventListener('submit', sendOrderConfirmation);
+</script>
+</body>
+</html>
