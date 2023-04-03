@@ -18,14 +18,14 @@ app.post('/sendEmail', async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'hotmail',
         auth: {
-            user: 'policarpostore@outlook.com',
-            pass: 'salve061',
+            user: 'youremail@outlook.com',
+            pass: 'password',
         },
     });
 
     const mailOptions = {
-        from: 'policarpostore@outlook.com',
-        to: 'policarpostore@outlook.com',
+        from: 'youremail@outlook.com',
+        to: 'youremail@outlook.com',
         replyTo: clientEmail, // Adiciona o e-mail do cliente como remetente para resposta
         subject: 'Novo pedido',
         text: `Produto: ${product}\nValor pago: ${price}\nEndereço de entrega: ${address}\nE-mail do cliente: ${clientEmail}`,
